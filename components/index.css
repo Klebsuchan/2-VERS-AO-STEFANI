@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..900;1,6..96,400..900&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Plus Jakarta Sans', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-bodoni: 'Bodoni Moda', serif;
+  
+  --color-brand-red: #D4AF37; /* Replaced aggressive red with elegant Champagne Gold */
+  --color-brand-yellow: #C5A059; /* Bronze Gold */
+  
+  --color-brand-black: var(--theme-black);
+  --color-brand-dark: var(--theme-dark);
+  --color-brand-cream: var(--theme-cream);
+  --color-brand-cream-dark: var(--theme-cream-dark);
+}
+
+:root {
+  --theme-black: #0d0c0b;
+  --theme-dark: #171513;
+  --theme-cream: #fbfaf8;
+  --theme-cream-dark: #eeebe3;
+}
+
+:root.dark {
+  --theme-black: #fbfaf8;
+  --theme-dark: #eeebe3;
+  --theme-cream: #0d0c0b;
+  --theme-cream-dark: #171513;
+}
+
+body {
+  background-color: var(--theme-cream);
+  color: var(--theme-black);
+  font-family: var(--font-bodoni);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.4;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+}
+
+:root.dark body::before {
+  opacity: 0.15;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.02em;
+}
+
+.text-shadow-elegant {
+  text-shadow: 0 4px 16px rgba(212, 175, 55, 0.1);
+}
+
+.text-shadow-glow {
+  text-shadow: 0 4px 24px rgba(212, 175, 55, 0.4);
+}
+
+.gold-gradient-text {
+  background: linear-gradient(135deg, #8A5A19 0%, #FCEE9A 45%, #C5A059 75%, #8A5A19 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.gold-gradient-bg {
+  background: linear-gradient(135deg, #8A5A19 0%, #FCEE9A 45%, #C5A059 75%, #8A5A19 100%);
+}
+
+.gold-gradient-border {
+  border-image: linear-gradient(135deg, #8A5A19 0%, #FCEE9A 45%, #C5A059 75%, #8A5A19 100%) 1;
+}
+
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: var(--color-brand-cream); }
+::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #C5A059; }
