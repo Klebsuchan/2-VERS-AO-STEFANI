@@ -1,0 +1,50 @@
+{
+  "entities": {
+    "ClientGallery": {
+      "title": "Client Gallery",
+      "description": "A private gallery for a client to view their photos.",
+      "type": "object",
+      "properties": {
+        "clientName": {
+          "type": "string",
+          "description": "Name of the client"
+        },
+        "eventName": {
+          "type": "string",
+          "description": "Name or title of the event/session"
+        },
+        "coverImage": {
+          "type": "string",
+          "description": "URL to the cover image"
+        }
+      },
+      "required": ["clientName", "eventName", "coverImage"]
+    },
+    "Photo": {
+      "title": "Photo",
+      "description": "A single photo within a client gallery.",
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "description": "URL of the photo"
+        },
+        "isApproved": {
+          "type": "boolean",
+          "description": "Whether the client has approved this photo"
+        }
+      },
+      "required": ["url", "isApproved"]
+    }
+  },
+  "firestore": {
+    "/client_galleries/{galleryId}": {
+      "schema": { "$ref": "#/entities/ClientGallery" },
+      "description": "Stores client galleries, where galleryId acts as the access PIN."
+    },
+    "/client_galleries/{galleryId}/photos/{photoId}": {
+      "schema": { "$ref": "#/entities/Photo" },
+      "description": "Stores individual photos for a specific gallery."
+    }
+  }
+}

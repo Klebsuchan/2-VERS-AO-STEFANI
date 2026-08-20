@@ -1,0 +1,55 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helpers
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+    function isValidString(val, maxLen) { return val is string && val.size() <= maxLen; }
+    
+    function isValidClientGallery(data) {
+      return data.keys().hasAll(['clientName', 'eventName', 'coverImage']) &&
+             data.keys().size() == 3 &&
+             isValidString(data.clientName, 100) &&
+             isValidString(data.eventName, 100) &&
+             isValidString(data.coverImage, 1000);
+    }
+    
+    function isValidPhoto(data) {
+      return data.keys().hasAll(['url', 'isApproved']) &&
+             data.keys().size() == 2 &&
+             isValidString(data.url, 1000) &&
+             data.isApproved is bool;
+    }
+
+    // client_galleries: The document ID is the secret PIN
+    match /client_galleries/{galleryId} {
+      // Anyone who knows the ID (PIN) can read the gallery
+      allow get: if true;
+      // No one can list all galleries
+      allow list: if false;
+      
+      // Only an admin could create/update/delete these, but since we have no auth set up, 
+      // we'll disable create/delete from client-side for now.
+      allow create, update, delete: if false;
+
+      // Subcollection for photos
+      match /photos/{photoId} {
+        // Anyone who knows the parent galleryId can read and list the photos for that gallery
+        allow read: if true;
+        
+        // Clients can update the 'isApproved' status
+        allow update: if 
+          incoming().diff(existing()).affectedKeys().hasOnly(['isApproved']) &&
+          incoming().isApproved is bool;
+          
+        allow create, delete: if false;
+      }
+    }
+  }
+}

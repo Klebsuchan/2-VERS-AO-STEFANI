@@ -1,0 +1,8 @@
+{
+  "name": " portfolio stefani 2 versão",
+  "description": "Portfólio comercial de fotografia com toques de tecnologia e magia, agendamento em tempo real via WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
